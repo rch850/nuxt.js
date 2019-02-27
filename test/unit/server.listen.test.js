@@ -70,4 +70,28 @@ describe('server listen', () => {
     // Finalize test
     await nuxt.close()
   })
+
+  test('should build a url without base when no base specified', async () => {
+    const nuxt = new Nuxt(config)
+    const port = await getPort()
+    const listen = () => nuxt.server.listen(port, 'localhost')
+
+    // Listen for first time
+    await listen()
+    expect(nuxt.server.listeners[0].url).toBe(`http://localhost:${port}/`)
+
+    await nuxt.close()
+  })
+
+  test('should build a url with base when base specified', async () => {
+    const nuxt = new Nuxt({ ...config, router: { base: '/app/' } })
+    const port = await getPort()
+    const listen = () => nuxt.server.listen(port, 'localhost')
+
+    // Listen for first time
+    await listen()
+    expect(nuxt.server.listeners[0].url).toBe(`http://localhost:${port}/app/`)
+
+    await nuxt.close()
+  })
 })

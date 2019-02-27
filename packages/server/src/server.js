@@ -235,7 +235,8 @@ export default class Server {
       socket: socket || this.options.server.socket,
       https: this.options.server.https,
       app: this.app,
-      dev: this.options.dev
+      dev: this.options.dev,
+      baseUrl: this.options.router.base
     })
 
     // Listen
